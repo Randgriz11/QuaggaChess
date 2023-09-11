@@ -1,4 +1,3 @@
-import { Chess } from 'js/node_modules/chess.js'
 var board2 = Chessboard('board2', {
     draggable: true,
     dropOffBoard: 'trash',
