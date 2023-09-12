@@ -1,14 +1,20 @@
-#entirefuckingscreen{
-  background-color:#6D7880;
-  justify-content: center;
+html,body{
+  overflow: hidden; /* Prevent overflow */
 }
 
+
+#entirefuckingscreen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #6D7880; 
+  flex-direction: column;
+}
 
 #gamesection{
   display: flex;
   justify-content: center;
-
- 
 
 }
 #statusout{
