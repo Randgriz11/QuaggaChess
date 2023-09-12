@@ -1,4 +1,31 @@
 #gamesection{
+  display: flex;
   background-color:#6D7880;
-  font-size:500%;
+  justify-content: center;
+
 }
+#statusout{
+  display: flex;
+  background-color:#6D7880;
+  justify-content: center;
+
+}
+#pgnout{
+  display: flex;
+  background-color:#6D7880;
+  justify-content: center;
+
+}
+
+#fenout{
+  display: flex;
+  background-color:#6D7880;
+  justify-content: center;
+
+}
+#startandendbutton{
+  display: flex;
+  background-color:#6D7880;
+  justify-content: center;
+}
+
