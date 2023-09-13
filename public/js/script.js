@@ -1,6 +1,7 @@
 import { Chess } from '/node_modules/chess.js/dist/esm/chess.js'
+// import { io } from "socket.io-client";
 
-const socket = io();
+// const socket = io();
 var board = null
 var game = new Chess()
 var $status = $('#status')
