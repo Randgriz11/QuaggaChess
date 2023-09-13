@@ -1,5 +1,6 @@
 html,body{
   overflow: hidden; /* Prevent overflow */
+  
 }
 .h1 {
   display: flex;
@@ -8,10 +9,22 @@ html,body{
   padding-top: 5%;
   border-bottom: 3px solid white;
   padding-bottom: 5%;
-  background-color: #6D7880; 
   color: white;
-
+  background-color: #6D7880; 
 }
+#buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+
+#LoginButton{
+  margin-right: 2.5%;
+}
+
+
+
 .lead1{
  
   padding-left: 10%;
@@ -25,6 +38,8 @@ html,body{
 #textboxes{
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 #ourmission{
   display: flex;
@@ -38,7 +53,7 @@ html,body{
   padding: 2%;
   color: white;
   font-size: 150%;
-
+  background-color: #6D7880; 
 }
 
 #questionsection{
@@ -53,13 +68,16 @@ html,body{
   padding: 2%;
   color: white;
   font-size: 150%;
+  background-color: #6D7880; 
 
 
 }
 
 #homescreen{
-  background-color: #6D7880; 
+
   height: 100vh;
+  background-image: url('../img/chess.gif'); 
+  background-size: cover;
 }
 
 #entirefuckingscreen{
