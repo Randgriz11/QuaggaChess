@@ -17,3 +17,8 @@ app.get('/node_modules/chess.js/dist/esm/chess.js', (req, res) => {
 
 // Start server
 server.listen(PORT, () => console.log('Server running on port ${PORT}'))
+
+// Handle a socket connection
+io.on('connection', socket => {
+    console.log('New WS Connection')
+})
