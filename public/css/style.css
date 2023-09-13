@@ -1,7 +1,66 @@
 html,body{
   overflow: hidden; /* Prevent overflow */
 }
+.h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5%;
+  border-bottom: 3px solid white;
+  padding-bottom: 5%;
+  background-color: #6D7880; 
+  color: white;
 
+}
+.lead1{
+ 
+  padding-left: 10%;
+  font-size: larger;
+}
+.lead2{
+ 
+  padding-left: 10%;
+  font-size: larger;
+}
+#textboxes{
+  display: flex;
+  flex-direction: row;
+}
+#ourmission{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  border: solid white;
+  text-align: center;
+  margin-top: 5%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  padding: 2%;
+  color: white;
+  font-size: 150%;
+
+}
+
+#questionsection{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  border: solid white;
+  text-align: center;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 5%;
+  padding: 2%;
+  color: white;
+  font-size: 150%;
+
+
+}
+
+#homescreen{
+  background-color: #6D7880; 
+  height: 100vh;
+}
 
 #entirefuckingscreen{
   display: flex;
@@ -10,6 +69,7 @@ html,body{
   height: 100vh;
   background-color: #6D7880; 
   flex-direction: column;
+  padding-top: 0px;
 }
 
 #gamesection{
@@ -37,4 +97,6 @@ html,body{
   display: flex;
   justify-content: center;
 }
+
+
 
