@@ -10,5 +10,15 @@ const io = socketio(server)
 // Set static folder
 app.use(express.static(path.join(__dirname, "public")))
 
+// Add a route to serve your chess.js module
+app.get('/node_modules/chess.js/dist/esm/chess.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'node_modules/chess.js/dist/esm/chess.js'));
+  });
+
 // Start server
 server.listen(PORT, () => console.log('Server running on port ${PORT}'))
+
+// Handle a socket connection
+io.on('connection', socket => {
+    console.log('New WS Connection')
+})
