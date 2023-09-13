@@ -1,4 +1,5 @@
 import { Chess } from '/node_modules/chess.js/dist/esm/chess.js'
+// import { io } from "socket.io-client";
 
 const socket = io();
 var board = null
