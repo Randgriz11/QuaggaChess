@@ -1,4 +1,4 @@
-import { Chess } from '/js/node_modules/chess.js/dist/esm/chess.js'
+import { Chess } from '/node_modules/chess.js/dist/esm/chess.js'
 var board = null
 var game = new Chess()
 var $status = $('#status')
