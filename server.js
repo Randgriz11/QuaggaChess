@@ -16,9 +16,30 @@ app.get('/node_modules/chess.js/dist/esm/chess.js', (req, res) => {
   });
 
 // Start server
-server.listen(PORT, () => console.log('Server running on port ${PORT}'))
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 
+const connections = [null, null]
 // Handle a socket connection
 io.on('connection', socket => {
-    console.log('New WS Connection')
+    // console.log('New WS Connection')
+
+    // Find an available player number
+    let playerIndex = -1;
+    for (const i in connections){
+      if(connections[i] === null){
+        playerIndex = i
+        break
+      }
+    }
+
+    // Ignore player 3
+    if (playerIndex === -1){
+      console.log("3rd player reject")
+      return
+    }
+
+    // Tell the connecting client what player number they are
+    socket.emit('player-number', playerIndex)
+
+    console.log(`Player ${playerIndex} has connected`)
 })
