@@ -43,9 +43,25 @@ io.on('connection', socket => {
       return
     }
 
-    // Show that player connected but not ready
-    connections[playerIndex] = false
-
     // Tell everyone what player number just connected
     socket.broadcast.emit('player-connection', playerIndex)
+    connections[playerIndex] = true
+
+    // Handle Disconnect
+    socket.on('disconnect', () => {
+      console.log(`Player ${playerIndex} disconnected`)
+      connections[playerIndex] = null
+      // Tell everyone what player disconnected
+      socket.broadcast.emit('player-connection', playerIndex)
+    })
+
+    //Check player connections
+    socket.on('check-players', () => {
+      const players = []
+      for (const i in connections) {
+        connections[i] === null ? players.push({connected: false}) : 
+        players.push({connected: true})
+      }
+      socket.emit('check-players', players)
+    })
 })

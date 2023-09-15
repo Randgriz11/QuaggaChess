@@ -25,13 +25,41 @@ socket.on('player-number', num => {
       currentPlayer = "black"
     }
     console.log(playerNum)
+
+    // Get other player status
+    socket.emit('check-players')
   }
 })
 
 //Another player has connected or disconnected
 socket.on('player-connection', num => {
   console.log(`Player number ${num} has connected or disconnected`)
+  playerConnectedOrDisconnected(num)
 })
+
+// Check player status
+socket.on('check-players', players => {
+  players.forEach((p, i) => {
+    if(p.connected) playerConnectedOrDisconnected(i)
+  })
+})
+
+function playerConnectedOrDisconnected(num) {
+  let player = -1;
+  if(parseInt(num) === 0){
+    player = '.playerwhite'
+  }
+  else if(parseInt(num) === 1){
+    player = '.playerblack'
+  }
+  else{
+    console.log('else');
+    return;
+  }
+  console.log('here');
+  document.querySelector(`${player} .connected span`).classList.toggle('green')
+  if(parseInt(num) === playerNum) document.querySelector(player).style.fontWeight = 'bold'
+}
 
 function removeGreySquares () {
   $('#myBoard .square-55d63').css('background', '')
