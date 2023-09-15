@@ -1,5 +1,9 @@
 import { Chess } from '/node_modules/chess.js/dist/esm/chess.js'
 // import { io } from "socket.io-client";
+let currentPlayer = 'white';
+let playerNum = 0;
+let ready = false;
+let enemyReady = false;
 
 const socket = io();
 var board = null
@@ -10,6 +14,24 @@ var $pgn = $('#pgn')
 var whiteSquareGrey = '#18453B'
 var blackSquareGrey = '#4B5320'
 
+// Get your player number
+socket.on('player-number', num => {
+  if (num === -1) {
+    entirefuckingscreen.innerHTML = "Server is full..."
+  }
+  else{
+    playerNum = parseInt(num)
+    if(playerNum === 1){
+      currentPlayer = "black"
+    }
+    console.log(playerNum)
+  }
+})
+
+//Another player has connected or disconnected
+socket.on('player-connection', num => {
+  console.log(`Player number ${num} has connected or disconnected`)
+})
 
 function removeGreySquares () {
   $('#myBoard .square-55d63').css('background', '')

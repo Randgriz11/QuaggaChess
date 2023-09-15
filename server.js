@@ -32,14 +32,20 @@ io.on('connection', socket => {
       }
     }
 
+    // Tell the connecting client what player number they are
+    socket.emit('player-number', playerIndex)
+
+    console.log(`Player ${playerIndex} has connected`)
+
     // Ignore player 3
     if (playerIndex === -1){
       console.log("3rd player reject")
       return
     }
 
-    // Tell the connecting client what player number they are
-    socket.emit('player-number', playerIndex)
+    // Show that player connected but not ready
+    connections[playerIndex] = false
 
-    console.log(`Player ${playerIndex} has connected`)
+    // Tell everyone what player number just connected
+    socket.broadcast.emit('player-connection', playerIndex)
 })
