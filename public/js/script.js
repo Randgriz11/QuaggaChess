@@ -5,6 +5,9 @@ let playerNum = 0;
 let ready = false;
 let enemyReady = false;
 
+var playerone = document.getElementsByClassName('player1');
+var playertwo = document.getElementsByClassName('player2');
+
 const socket = io();
 var board = null
 var game = new Chess()
@@ -28,6 +31,7 @@ socket.on('player-number', num => {
 
     // Get other player status
     socket.emit('check-players')
+    config();
   }
 })
 
@@ -45,12 +49,12 @@ socket.on('check-players', players => {
 })
 
 function playerConnectedOrDisconnected(num) {
-  let player = -1;
+  let player = '.player1';
   if(parseInt(num) === 0){
-    player = '.playerwhite'
+    player = '.player1'
   }
   else if(parseInt(num) === 1){
-    player = '.playerblack'
+    player = '.player2'
   }
   else{
     console.log('else');
@@ -58,7 +62,7 @@ function playerConnectedOrDisconnected(num) {
   }
   console.log('here');
   document.querySelector(`${player} .connected span`).classList.toggle('green')
-  if(parseInt(num) === playerNum) document.querySelector(player).style.fontWeight = 'bold'
+  if(parseInt(num) === playerNum) document.querySelector('.player1').style.fontWeight = 'bold'
 }
 
 function removeGreySquares () {
@@ -175,20 +179,29 @@ function updateStatus () {
   
 }
 
-var config = {
-  draggable: true,
-  position: 'start',
-  onDragStart: onDragStart,
-  onDrop: onDrop,
-  onSnapEnd: onSnapEnd,
-  onMouseoutSquare: onMouseoutSquare,
-  onMouseoverSquare: onMouseoverSquare,
-  dropOffBoard: 'snapback'
-}
-board = Chessboard('myBoard', config)
-$('#clearBtn').on('click', board.clear)
+function config () {
+  let orientation = 'white';
+  if(currentPlayer === 'black'){
+    orientation = 'black';
+    playerone[0].innerHTML = 'Black player <div class="connected">Connected <span></span></div>'
+    playertwo[0].innerHTML = 'White player <div class="connected">Connected <span></span></div>'
+  }
+  var config = {
+    draggable: true,
+    position: 'start',
+    onDragStart: onDragStart,
+    onDrop: onDrop,
+    onSnapEnd: onSnapEnd,
+    onMouseoutSquare: onMouseoutSquare,
+    onMouseoverSquare: onMouseoverSquare,
+    dropOffBoard: 'snapback',
+    orientation: orientation
+  }
+  board = Chessboard('myBoard', config)
+  $('#clearBtn').on('click', board.clear)
 
-$('#startBtn').on('click', board.start)
+  $('#startBtn').on('click', board.start)
+}
 
 
 updateStatus()
