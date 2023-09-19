@@ -87,21 +87,23 @@ function onMouseoutSquare (square, piece) {
 
 function onMouseoverSquare (square, piece) {
   // get list of possible moves for this square
-  var moves = game.moves({
-    square: square,
-    verbose: true
-  })
+  if((currentPlayer === 'white' && game.turn() === 'w') || (currentPlayer === 'black' && game.turn() === 'b')){
+    var moves = game.moves({
+      square: square,
+      verbose: true
+    })
 
-  // exit if there are no moves available for this square
-  if (moves.length === 0) return
+    // exit if there are no moves available for this square
+    if (moves.length === 0) return
 
-  // highlight the square they moused over
-  greySquare(square)
+    // highlight the square they moused over
+    greySquare(square)
 
-  // highlight the possible squares for this piece
-  for (var i = 0; i < moves.length; i++) {
-    greySquare(moves[i].to)
-  }
+    // highlight the possible squares for this piece
+    for (var i = 0; i < moves.length; i++) {
+      greySquare(moves[i].to)
+    }
+}
 }
 
 
@@ -110,8 +112,19 @@ function onDragStart (source, piece, position, orientation) {
   if (game.isGameOver()) return false
 
   // only pick up pieces for the side to move
-  if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+  // if white player
+  if(currentPlayer === 'white'){
+    if ((piece.search(/^b/) !== -1)) {
+      return false
+    }
+  }
+  // if black player
+  else if(currentPlayer === 'black'){
+    if ((piece.search(/^w/) !== -1)) {
+      return false
+    }
+  }
+  else{
     return false
   }
 }
@@ -131,9 +144,10 @@ function onDrop (source, target) {
     return 'snapback'
   }
 
-
-  // // illegal move
-  // if (move === null) return 'snapback'
+  // Setup even listeners for chess movement
+  console.log(source + " " + target);
+  let moveArray = [source, target];
+  socket.emit('move', moveArray);
 
   updateStatus()
 }

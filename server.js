@@ -64,4 +64,9 @@ io.on('connection', socket => {
       }
       socket.emit('check-players', players)
     })
+
+    // On Opponent Move
+    socket.on('move', move => {
+      console.log(`Chess move from ${playerIndex}` + " moving from " + move[0] + " to " + move[1])
+    })
 })
