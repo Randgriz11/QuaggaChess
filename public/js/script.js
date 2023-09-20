@@ -152,6 +152,12 @@ function onDrop (source, target) {
   updateStatus()
 }
 
+// On move recieved
+socket.on('move', move => {
+  board.move(move[0] + '-' + move[1])
+  game.move({from: move[0], to: move[1]})
+})
+
 // update the board position after the piece snap
 // for castling, en passant, pawn promotion
 function onSnapEnd () {

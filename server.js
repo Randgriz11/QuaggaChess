@@ -68,5 +68,8 @@ io.on('connection', socket => {
     // On Opponent Move
     socket.on('move', move => {
       console.log(`Chess move from ${playerIndex}` + " moving from " + move[0] + " to " + move[1])
+
+      // Emit the move to the other player
+      socket.broadcast.emit('move', move)
     })
 })
