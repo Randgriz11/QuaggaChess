@@ -111,10 +111,6 @@ html,body{
   justify-content: center;
 
 }
-#startandendbutton{
-  display: flex;
-  justify-content: center;
-}
 
 .connected {
   font-weight: normal;

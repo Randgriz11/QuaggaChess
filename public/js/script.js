@@ -212,9 +212,6 @@ function config () {
     orientation: orientation
   }
   board = Chessboard('myBoard', config)
-  $('#clearBtn').on('click', board.clear)
-
-  $('#startBtn').on('click', board.start)
 }
 
 
