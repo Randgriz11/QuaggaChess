@@ -32,14 +32,44 @@ io.on('connection', socket => {
       }
     }
 
+    // Tell the connecting client what player number they are
+    socket.emit('player-number', playerIndex)
+
+    console.log(`Player ${playerIndex} has connected`)
+
     // Ignore player 3
     if (playerIndex === -1){
       console.log("3rd player reject")
       return
     }
 
-    // Tell the connecting client what player number they are
-    socket.emit('player-number', playerIndex)
+    // Tell everyone what player number just connected
+    socket.broadcast.emit('player-connection', playerIndex)
+    connections[playerIndex] = true
 
-    console.log(`Player ${playerIndex} has connected`)
+    // Handle Disconnect
+    socket.on('disconnect', () => {
+      console.log(`Player ${playerIndex} disconnected`)
+      connections[playerIndex] = null
+      // Tell everyone what player disconnected
+      socket.broadcast.emit('player-connection', playerIndex)
+    })
+
+    //Check player connections
+    socket.on('check-players', () => {
+      const players = []
+      for (const i in connections) {
+        connections[i] === null ? players.push({connected: false}) : 
+        players.push({connected: true})
+      }
+      socket.emit('check-players', players)
+    })
+
+    // On Opponent Move
+    socket.on('move', move => {
+      console.log(`Chess move from ${playerIndex}` + " moving from " + move[0] + " to " + move[1])
+
+      // Emit the move to the other player
+      socket.broadcast.emit('move', move)
+    })
 })

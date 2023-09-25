@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/58210c69-f8d7-4c04-9866-e6ac6dbcf966/resourceGroups/QuaggaGroup/providers/Microsoft.Web/sites/quaggachess",
+    "appService.deploySubpath": "."
+}

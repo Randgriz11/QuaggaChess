@@ -1,5 +1,12 @@
 import { Chess } from '/node_modules/chess.js/dist/esm/chess.js'
 // import { io } from "socket.io-client";
+let currentPlayer = 'white';
+let playerNum = 0;
+let ready = false;
+let enemyReady = false;
+
+var playerone = document.getElementsByClassName('player1');
+var playertwo = document.getElementsByClassName('player2');
 
 const socket = io();
 var board = null
@@ -10,6 +17,53 @@ var $pgn = $('#pgn')
 var whiteSquareGrey = '#18453B'
 var blackSquareGrey = '#4B5320'
 
+// Get your player number
+socket.on('player-number', num => {
+  if (num === -1) {
+    entirefuckingscreen.innerHTML = "Server is full..."
+  }
+  else{
+    playerNum = parseInt(num)
+    if(playerNum === 1){
+      currentPlayer = "black"
+    }
+    console.log(playerNum)
+
+    // Get other player status
+    socket.emit('check-players')
+    config();
+  }
+})
+
+//Another player has connected or disconnected
+socket.on('player-connection', num => {
+  console.log(`Player number ${num} has connected or disconnected`)
+  playerConnectedOrDisconnected(num)
+})
+
+// Check player status
+socket.on('check-players', players => {
+  players.forEach((p, i) => {
+    if(p.connected) playerConnectedOrDisconnected(i)
+  })
+})
+
+function playerConnectedOrDisconnected(num) {
+  let player = '.player1';
+  if(parseInt(num) === 0){
+    player = '.player1'
+  }
+  else if(parseInt(num) === 1){
+    player = '.player2'
+  }
+  else{
+    console.log('else');
+    return;
+  }
+  console.log('here');
+  document.querySelector(`${player} .connected span`).classList.toggle('green')
+  if(parseInt(num) === playerNum) document.querySelector('.player1').style.fontWeight = 'bold'
+}
 
 function removeGreySquares () {
   $('#myBoard .square-55d63').css('background', '')
@@ -33,21 +87,23 @@ function onMouseoutSquare (square, piece) {
 
 function onMouseoverSquare (square, piece) {
   // get list of possible moves for this square
-  var moves = game.moves({
-    square: square,
-    verbose: true
-  })
+  if((currentPlayer === 'white' && game.turn() === 'w') || (currentPlayer === 'black' && game.turn() === 'b')){
+    var moves = game.moves({
+      square: square,
+      verbose: true
+    })
 
-  // exit if there are no moves available for this square
-  if (moves.length === 0) return
+    // exit if there are no moves available for this square
+    if (moves.length === 0) return
 
-  // highlight the square they moused over
-  greySquare(square)
+    // highlight the square they moused over
+    greySquare(square)
 
-  // highlight the possible squares for this piece
-  for (var i = 0; i < moves.length; i++) {
-    greySquare(moves[i].to)
-  }
+    // highlight the possible squares for this piece
+    for (var i = 0; i < moves.length; i++) {
+      greySquare(moves[i].to)
+    }
+}
 }
 
 
@@ -56,8 +112,19 @@ function onDragStart (source, piece, position, orientation) {
   if (game.isGameOver()) return false
 
   // only pick up pieces for the side to move
-  if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+  // if white player
+  if(currentPlayer === 'white'){
+    if ((piece.search(/^b/) !== -1)) {
+      return false
+    }
+  }
+  // if black player
+  else if(currentPlayer === 'black'){
+    if ((piece.search(/^w/) !== -1)) {
+      return false
+    }
+  }
+  else{
     return false
   }
 }
@@ -77,12 +144,19 @@ function onDrop (source, target) {
     return 'snapback'
   }
 
-
-  // // illegal move
-  // if (move === null) return 'snapback'
+  // Setup even listeners for chess movement
+  console.log(source + " " + target);
+  let moveArray = [source, target];
+  socket.emit('move', moveArray);
 
   updateStatus()
 }
+
+// On move recieved
+socket.on('move', move => {
+  board.move(move[0] + '-' + move[1])
+  game.move({from: move[0], to: move[1]})
+})
 
 // update the board position after the piece snap
 // for castling, en passant, pawn promotion
@@ -125,20 +199,26 @@ function updateStatus () {
   
 }
 
-var config = {
-  draggable: true,
-  position: 'start',
-  onDragStart: onDragStart,
-  onDrop: onDrop,
-  onSnapEnd: onSnapEnd,
-  onMouseoutSquare: onMouseoutSquare,
-  onMouseoverSquare: onMouseoverSquare,
-  dropOffBoard: 'snapback'
+function config () {
+  let orientation = 'white';
+  if(currentPlayer === 'black'){
+    orientation = 'black';
+    playerone[0].innerHTML = 'Black player <div class="connected">Connected <span></span></div>'
+    playertwo[0].innerHTML = 'White player <div class="connected">Connected <span></span></div>'
+  }
+  var config = {
+    draggable: true,
+    position: 'start',
+    onDragStart: onDragStart,
+    onDrop: onDrop,
+    onSnapEnd: onSnapEnd,
+    onMouseoutSquare: onMouseoutSquare,
+    onMouseoverSquare: onMouseoverSquare,
+    dropOffBoard: 'snapback',
+    orientation: orientation
+  }
+  board = Chessboard('myBoard', config)
 }
-board = Chessboard('myBoard', config)
-$('#clearBtn').on('click', board.clear)
-
-$('#startBtn').on('click', board.start)
 
 
 updateStatus()
