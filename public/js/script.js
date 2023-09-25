@@ -199,6 +199,7 @@ function updateStatus () {
   
 }
 
+
 function config () {
   let orientation = 'white';
   if(currentPlayer === 'black'){
@@ -218,6 +219,9 @@ function config () {
     orientation: orientation
   }
   board = Chessboard('myBoard', config)
+}
+if(isset($_POST['TheSignUpButton'])){
+  window.location.href="Signup.html"
 }
 
 
