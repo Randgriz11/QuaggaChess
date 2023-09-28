@@ -44,9 +44,22 @@
     </nav>
     <div id="homescreen">
       <p class="h1">Welcome to Quagga Chess</p>
-      <div id="buttons">
-        <button id="LoginButton", class="button1">Login</button>
-        <button id="SignUpButton", class="button1">Sign Up</button>
+      <div id="login-form">
+        <form>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username or Email</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username or email" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+          </div>
+          <div id="loginButtons" >
+          <button id="LoginButton", class="button1" type="submit">Login</button>
+          <button id="SignUpButton",name="TheSignUpButton" class="button1" type="submit">Sign Up</button>
+        </div>
+        </form>
+       
       </div>
       <div id="textboxes">
         <div id="questionsection">

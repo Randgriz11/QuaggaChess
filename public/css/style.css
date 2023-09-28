@@ -1,6 +1,8 @@
 html,body{
   overflow: hidden; /* Prevent overflow */
-  
+  height: 100%;
+  width: 100%;
+  background-color: #6D7880; 
 }
 .h1 {
   display: flex;
@@ -12,19 +14,24 @@ html,body{
   color: white;
   background-color: #6D7880; 
 }
-/* #buttons{
+#buttons{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10%;
-} */
+  height: 50%;
+  align-items: flex-start;
+}
 
 #LoginButton{
-  margin-right: 2.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2%;
+  
 }
 
 .button1 {
-  --color: #00A97F;
+  --color: #6D7880;
   padding: 0.8em 1.7em;
   background-color: var(--color);
   border-radius: .3em;
@@ -39,6 +46,10 @@ html,body{
   text-transform: uppercase;
   color: white;
   z-index: 1;
+  
+}
+.custom-background {
+  background-color: #6D7880;
 }
 
 .button1::before,
@@ -61,7 +72,7 @@ html,body{
 }
 
 .button1::after {
-  left: calc(100% + 1em);
+  left: calc(200% + 1em);
   top: calc(100% + 1em);
 }
 
@@ -92,6 +103,9 @@ html,body{
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  height: 200%;
+
+
 }
 #ourmission{
   display: flex;
@@ -121,8 +135,7 @@ html,body{
   color: white;
   font-size: 150%;
   background-color: #6D7880; 
-
-
+  height: 1%;
 }
 
 #homescreen{
@@ -178,3 +191,29 @@ html,body{
 span.green{
   background: green;
 }
+
+
+ #login-form {
+  width: 20%;
+  margin: 0 auto; /* Center the form horizontally on the screen */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#Signup{
+  height: 100%;
+  width: 100%;
+  background-color: #6D7880; 
+}
+
+#submitbutton{
+  width: 100%;
+}
+
+#loginButtons{
+  display: flex;
+  flex-direction: row;
+}
+ 
